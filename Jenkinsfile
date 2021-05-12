@@ -10,8 +10,8 @@ pipeline {
     stages {
         stage('Prepare'){
             steps{
-                sh 'docker stop $(docker ps -q --filter "ancestor=lab11botcarrier")'
-                sh 'docker rm -f $(docker ps -q --filter "ancestor=lab11botcarrier" --filter "status=exited")'
+                sh 'docker stop $(docker ps -q --filter "ancestor=lab11")'
+                sh 'docker rm -f $(docker ps -q --filter "ancestor=lab11" --filter "status=exited")'
 
             }
         }
@@ -31,7 +31,7 @@ pipeline {
             }
         stage('Deploy'){
             steps{
-                sh 'docker run -d lab11botcarrier'
+                sh 'docker run -d lab11'
             }
         }
         }
