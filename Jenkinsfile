@@ -1,38 +1,16 @@
 pipeline {
-    environment {dockerImage = ''}
-    agent any //dockerfile true
-
-   // tools {
-        // Install the Maven version configured as "M3" and add it to the path.
-     //   maven "M3"
-   // }
-
-    stages {
-        stage('Prepare'){
-            steps{
-                sh 'docker stop $(docker ps -q --filter "ancestor=lab11")'
-                sh 'docker rm -f $(docker ps -q --filter "ancestor=lab11" --filter "status=exited")'
-
-            }
-        }
-        stage('Build') {
-            steps {
-                // Get some code from a GitHub repository
-                git 'https://github.com/NastyaKkk/Lab11Bot.git'
-                sh 'DOCKER_BUILDKIT=0'
-                sh 'docker build -f ./Dockerfile .'
-
-                // Run Maven on a Unix agent.
-               // sh "mvn -Dmaven.test.failure.ignore=true clean package"
-
-                // To run Maven on a Windows agent, use
-                // bat "mvn -Dmaven.test.failure.ignore=true clean package"
-            }
-            }
-        stage('Deploy'){
-            steps{
-                sh 'docker run -d lab11'
-            }
-        }
+    agent {
+        docker {
+            image 'maven:3-alpine'
+            args '-v /root/.m2:/root/.m2'
         }
     }
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+                sh "mvn -X exec:java -Dexec.mainClass=kpi.acts.appz.bot.hellobot.HelloWorldBot -Dexec.args="'1823498416:AAGPPbABlEb4z0cIlROJoYK9Aqb9JrQa2uI' 'kovalenko25_bot'""
+            }
+        }
+    }
+}

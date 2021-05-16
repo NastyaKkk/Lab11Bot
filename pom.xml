@@ -28,6 +28,16 @@
                     <target>8</target>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <includePluginDependencies>true</includePluginDependencies>
+                    <mainClass>kpi.acts.appz.bot.hellobot.HelloWorldBot</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
